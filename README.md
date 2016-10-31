@@ -2,6 +2,8 @@
 
 *A Jekyll plugin to pull page the title from fist Markdown heading when none is specified.*
 
+[![Build Status](https://travis-ci.org/benbalter/jekyll-title-from-headings.svg?branch=master)](https://travis-ci.org/benbalter/jekyll-title-from-headings)
+
 ## What it does
 
 If you have a Jekyll page that doesn't have a title specified in the YAML front matter, but the first non-whitespace line in a Markdown H1, H2, H3, this plugin instructs Jekyll to use that first heading as the page's title.
