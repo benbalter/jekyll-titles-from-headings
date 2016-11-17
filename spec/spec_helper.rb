@@ -1,4 +1,4 @@
-require "titles-from-headings"
+require "jekyll-titles-from-headings"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|

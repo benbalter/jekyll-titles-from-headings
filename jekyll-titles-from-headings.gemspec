@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
-require "titles-from-headings/version"
+require "jekyll-titles-from-headings/version"
 
 Gem::Specification.new do |s|
-  s.name          = "titles-from-headings"
-  s.version       = TitlesFromHeadings::VERSION
+  s.name          = "jekyll-titles-from-headings"
+  s.version       = JekyllTitlesFromHeadings::VERSION
   s.authors       = ["Ben Balter"]
   s.email         = ["ben.balter@github.com"]
   s.homepage      = "https://github.com/benbalter/titles-from-headings"

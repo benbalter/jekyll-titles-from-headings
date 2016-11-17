@@ -4,3 +4,7 @@ inherit_gem:
 AllCops:
   Exclude:
     - vendor/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*

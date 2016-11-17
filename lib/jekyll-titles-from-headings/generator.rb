@@ -1,4 +1,4 @@
-module TitlesFromHeadings
+module JekyllTitlesFromHeadings
   class Generator < Jekyll::Generator
     attr_accessor :site
 
