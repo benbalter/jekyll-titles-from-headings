@@ -4,4 +4,4 @@ set -e
 
 bundle exec rspec
 bundle exec rubocop -S -D
-gem build titles-from-headings.gemspec
+gem build jekyll-titles-from-headings.gemspec
