@@ -6,6 +6,7 @@ module JekyllTitlesFromHeadings
     CONVERTER_CLASS = Jekyll::Converters::Markdown
 
     safe true
+    priority :lowest
 
     def initialize(site)
       @site = site
