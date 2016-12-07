@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage      = "https://github.com/benbalter/titles-from-headings"
   s.summary       = "A Jekyll plugin to pull page the title from fist Markdown heading when none is specified"
 
-  s.files         = `git ls-files app lib`.split("\n")
+  s.files         = `git ls-files lib *.md`.split("\n")
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ["lib"]
   s.license       = "MIT"
