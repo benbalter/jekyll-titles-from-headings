@@ -26,7 +26,7 @@ module JekyllTitlesFromHeadings
     end
 
     def title?(document)
-      !document.data["title"].to_s.empty?
+      !document.data["title"].nil?
     end
 
     def markdown?(document)
