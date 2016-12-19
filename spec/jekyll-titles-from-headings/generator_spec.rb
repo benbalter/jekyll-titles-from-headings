@@ -6,6 +6,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:html_page) { page_by_path(site, "html-page.html") }
   let(:page_with_h2) { page_by_path(site, "page-with-h2.md") }
   let(:page_with_h3) { page_by_path(site, "page-with-h3.md") }
+  let(:page_with_empty_title) { page_by_path(site, "page-with-empty-title.md") }
 
   subject { described_class.new(site) }
 
@@ -53,6 +54,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "knows not add a title to non-HTML pages without titles" do
       expect(subject.should_add_title?(page)).to eql(true)
+    end
+
+    it "knows not add a title to pages with empty titles" do
+      expect(subject.should_add_title?(page_with_empty_title)).to eql(false)
     end
   end
 
