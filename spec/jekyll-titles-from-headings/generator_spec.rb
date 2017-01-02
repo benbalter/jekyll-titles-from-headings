@@ -7,6 +7,9 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:page_with_h2) { page_by_path(site, "page-with-h2.md") }
   let(:page_with_h3) { page_by_path(site, "page-with-h3.md") }
   let(:page_with_empty_title) { page_by_path(site, "page-with-empty-title.md") }
+  let(:page_with_content_before_title) do
+    page_by_path(site, "page-with-content-before-title.md")
+  end
 
   subject { described_class.new(site) }
 
@@ -76,6 +79,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "respects YAML titles" do
       expect(subject.title_for(page_with_title)).to eql("Page with title")
+    end
+
+    it "respects content before the title" do
+      expect(subject.title_for(page_with_content_before_title)).to be_nil
     end
   end
 
