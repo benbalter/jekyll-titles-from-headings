@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.version       = JekyllTitlesFromHeadings::VERSION
   s.authors       = ["Ben Balter"]
   s.email         = ["ben.balter@github.com"]
-  s.homepage      = "https://github.com/benbalter/titles-from-headings"
+  s.homepage      = "https://github.com/benbalter/jekyll-titles-from-headings"
   s.summary       = "A Jekyll plugin to pull page the title from fist Markdown heading when none is specified"
 
   s.files         = `git ls-files lib *.md`.split("\n")
