@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors       = ["Ben Balter"]
   s.email         = ["ben.balter@github.com"]
   s.homepage      = "https://github.com/benbalter/jekyll-titles-from-headings"
-  s.summary       = "A Jekyll plugin to pull page the title from fist Markdown heading when none is specified"
+  s.summary       = "A Jekyll plugin to pull the page title from the first Markdown heading when none is specified."
 
   s.files         = `git ls-files lib *.md`.split("\n")
   s.platform      = Gem::Platform::RUBY
