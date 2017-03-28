@@ -41,6 +41,8 @@ module JekyllTitlesFromHeadings
       return document.data["title"] if title?(document)
       matches = document.content.match(TITLE_REGEX)
       matches[1] if matches
+    rescue ArgumentError => e
+      raise e unless e.to_s.start_with?("invalid byte sequence in UTF-8")
     end
   end
 end
