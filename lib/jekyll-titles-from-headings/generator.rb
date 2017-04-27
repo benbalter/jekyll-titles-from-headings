@@ -2,7 +2,7 @@ module JekyllTitlesFromHeadings
   class Generator < Jekyll::Generator
     attr_accessor :site
 
-    TITLE_REGEX = %r!\A\s*\#{1,3} (.*)\n$!
+    TITLE_REGEX = %r!\A\s*\#{1,3}\s+(.*)\n$!
     CONVERTER_CLASS = Jekyll::Converters::Markdown
 
     safe true

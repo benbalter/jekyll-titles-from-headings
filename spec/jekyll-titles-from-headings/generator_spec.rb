@@ -70,11 +70,11 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
     end
 
     it "pulls title with an H2" do
-      expect(subject.title_for(page_with_h2)).to eql("Just an H2")
+      expect(subject.title_for(page_with_h2)).to eql("Just a tab-separated H2")
     end
 
     it "pulls title with an H3" do
-      expect(subject.title_for(page_with_h3)).to eql("Just an H3")
+      expect(subject.title_for(page_with_h3)).to eql("Just an H3 with two spaces")
     end
 
     it "respects YAML titles" do
