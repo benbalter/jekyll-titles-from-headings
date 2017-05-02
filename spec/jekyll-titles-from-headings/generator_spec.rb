@@ -3,6 +3,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
+  let(:page_with_md_title) { page_by_path(site, "page-with-md-title.md") }
   let(:html_page) { page_by_path(site, "html-page.html") }
   let(:page_with_h2) { page_by_path(site, "page-with-h2.md") }
   let(:page_with_h3) { page_by_path(site, "page-with-h3.md") }
@@ -75,6 +76,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "pulls title with an H3" do
       expect(subject.title_for(page_with_h3)).to eql("Just an H3 with two spaces")
+    end
+
+    it "strips Markdown syntax" do
+      expect(subject.title_for(page_with_md_title)).to eql("Just the title, no markup")
     end
 
     it "respects YAML titles" do
