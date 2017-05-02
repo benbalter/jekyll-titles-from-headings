@@ -4,10 +4,13 @@ module JekyllTitlesFromHeadings
 
     TITLE_REGEX = %r!\A\s*\#{1,3}\s+(.*)\n$!
     CONVERTER_CLASS = Jekyll::Converters::Markdown
+    STRIP_MARKUP_FILTERS = %i[
+      markdownify strip_html normalize_whitespace
+    ].freeze
 
     # Regex to strip extra markup still present after markdownify
     # (footnotes at the moment).
-    EXTRA_MARKUP_STRIP = %r!\[\^[^\]]*\]!
+    EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
 
     safe true
     priority :lowest
@@ -44,15 +47,21 @@ module JekyllTitlesFromHeadings
     def title_for(document)
       return document.data["title"] if title?(document)
       matches = document.content.match(TITLE_REGEX)
-      return unless matches
-      html = markdown_converter.convert(matches[1]).rstrip
-      title = Liquid::Template.parse("{{ '#{html}' | strip_html }}").render
-      # gsub() here strips any markup (notably footnotes) that was left
-      # intact because it couldn't be resolved. A slower alternative would
-      # be to convert the whole document.
-      title.gsub(EXTRA_MARKUP_STRIP, "")
+      strip_markup(matches[1]) if matches
     rescue ArgumentError => e
       raise e unless e.to_s.start_with?("invalid byte sequence in UTF-8")
+    end
+
+    private
+
+    def strip_markup(string)
+      STRIP_MARKUP_FILTERS.reduce(string) do |memo, method|
+        filters.public_send(method, memo)
+      end.gsub(EXTRA_MARKUP_REGEX, "")
+    end
+
+    def filters
+      @filters ||= JekyllTitlesFromHeadings::Filters.new(site)
     end
   end
 end
