@@ -2,7 +2,8 @@ module JekyllTitlesFromHeadings
   class Generator < Jekyll::Generator
     attr_accessor :site
 
-    TITLE_REGEX = %r!\A\s*\#{1,3}\s+(.*)\n$!
+    ATX_TITLE_REGEX = %r!\A\s*\#{1,3}\s+(.*)\n$!
+    SETEX_TITLE_REGEX = %r!\A\s*(.*)\r?\n[-=]+\s*$!
     CONVERTER_CLASS = Jekyll::Converters::Markdown
     STRIP_MARKUP_FILTERS = %i[
       markdownify strip_html normalize_whitespace
@@ -46,7 +47,9 @@ module JekyllTitlesFromHeadings
 
     def title_for(document)
       return document.data["title"] if title?(document)
-      matches = document.content.match(TITLE_REGEX)
+      matches =
+        document.content.match(ATX_TITLE_REGEX) ||
+        document.content.match(SETEX_TITLE_REGEX)
       strip_markup(matches[1]) if matches
     rescue ArgumentError => e
       raise e unless e.to_s.start_with?("invalid byte sequence in UTF-8")
