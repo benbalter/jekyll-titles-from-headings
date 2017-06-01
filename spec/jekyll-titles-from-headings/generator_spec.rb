@@ -11,6 +11,11 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:page_with_content_before_title) do
     page_by_path(site, "page-with-content-before-title.md")
   end
+  let(:page_with_setex_h1) { page_by_path(site, "page-with-setex-h1.md") }
+  let(:page_with_setex_h2) { page_by_path(site, "page-with-setex-h2.md") }
+  let(:page_with_no_empty_line_after_title) do
+    page_by_path(site, "page-with-no-empty-line-after-title.md")
+  end
 
   subject { described_class.new(site) }
 
@@ -78,6 +83,16 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       expect(subject.title_for(page_with_h3)).to eql("Just an H3 with two spaces")
     end
 
+    it "pulls title with a Setex-style H1" do
+      expect(subject.title_for(page_with_setex_h1)).to eql("This is also an H1")
+    end
+
+    it "pulls title with a Setex-style H2" do
+      expect(subject.title_for(page_with_setex_h2)).to eql(
+        "An H2 that was started with a space"
+      )
+    end
+
     it "strips Markdown syntax" do
       expect(subject.title_for(page_with_md_title)).to eql("Just the title, no markup")
     end
@@ -88,6 +103,12 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "respects content before the title" do
       expect(subject.title_for(page_with_content_before_title)).to be_nil
+    end
+
+    it "does not require a blank line after the title" do
+      expect(
+        subject.title_for(page_with_no_empty_line_after_title)
+      ).to eql("This is the title")
     end
   end
 
