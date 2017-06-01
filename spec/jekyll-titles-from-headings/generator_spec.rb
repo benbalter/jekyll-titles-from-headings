@@ -13,6 +13,9 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
   let(:page_with_setex_h1) { page_by_path(site, "page-with-setex-h1.md") }
   let(:page_with_setex_h2) { page_by_path(site, "page-with-setex-h2.md") }
+  let(:page_with_no_empty_line_after_title) do
+    page_by_path(site, "page-with-no-empty-line-after-title.md")
+  end
 
   subject { described_class.new(site) }
 
@@ -100,6 +103,12 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "respects content before the title" do
       expect(subject.title_for(page_with_content_before_title)).to be_nil
+    end
+
+    it "does not require a blank line after the title" do
+      expect(
+        subject.title_for(page_with_no_empty_line_after_title)
+      ).to eql("This is the title")
     end
   end
 
