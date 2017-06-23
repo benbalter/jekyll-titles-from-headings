@@ -33,6 +33,7 @@ module JekyllTitlesFromHeadings
       site.pages.each do |document|
         next unless should_add_title?(document)
         document.data["title"] = title_for(document)
+        strip_title!(document) if strip_title?(document)
       end
     end
 
@@ -66,6 +67,18 @@ module JekyllTitlesFromHeadings
       STRIP_MARKUP_FILTERS.reduce(string) do |memo, method|
         filters.public_send(method, memo)
       end.gsub(EXTRA_MARKUP_REGEX, "")
+    end
+
+    def strip_title?(document)
+      if document.data.key?("strip_title")
+        document.data["strip_title"] == true
+      else
+        site.config["strip_title"] == true
+      end
+    end
+
+    def strip_title!(document)
+      matches = document.content.gsub!(TITLE_REGEX, "")
     end
 
     def filters

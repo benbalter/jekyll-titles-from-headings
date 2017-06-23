@@ -30,3 +30,25 @@ Additionally, this allows you to store the title semantically, in the document i
   gems:
     - jekyll-titles-from-headings
   ```
+
+## Configuration
+If your theme renders titles based on `page.title`, you can remove the title from the content by by setting
+
+```yml
+strip_title: true
+```
+
+in your site's config file.
+
+To limit this behavior to a certain layouts or paths, use
+
+```yml
+defaults:
+  - scope:
+      path: <path-with-builtin-titles>
+      layout: <layout-with-builtin-title>
+    values:
+      strip_title: true
+```
+
+instead. For more on using front matter defaults, see the [Jekyll docs](https://jekyllrb.com/docs/configuration/#front-matter-defaults).
