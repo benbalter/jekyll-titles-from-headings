@@ -16,8 +16,12 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:page_with_no_empty_line_after_title) do
     page_by_path(site, "page-with-no-empty-line-after-title.md")
   end
-  let(:page_with_strip_title_true) { page_by_path(site, "page-with-strip-title-true.md") }
-  let(:page_with_strip_title_false) { page_by_path(site, "page-with-strip-title-false.md") }
+  let(:page_with_strip_title_true) do
+    page_by_path(site, "page-with-strip-title-true.md")
+  end
+  let(:page_with_strip_title_false) do
+    page_by_path(site, "page-with-strip-title-false.md")
+  end
 
   subject { described_class.new(site) }
 
@@ -126,7 +130,9 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
     end
 
     it "keeps the title when disabled in the front matter" do
-      expect(page_with_strip_title_false.content.strip).to eql("# Just an H1\n\nBlah blah blah")
+      expect(page_with_strip_title_false.content.strip).to eql(
+        "# Just an H1\n\nBlah blah blah"
+      )
     end
   end
 

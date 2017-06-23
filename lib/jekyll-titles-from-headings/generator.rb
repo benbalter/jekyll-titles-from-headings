@@ -78,7 +78,7 @@ module JekyllTitlesFromHeadings
     end
 
     def strip_title!(document)
-      matches = document.content.gsub!(TITLE_REGEX, "")
+      document.content.gsub!(TITLE_REGEX, "")
     end
 
     def filters
