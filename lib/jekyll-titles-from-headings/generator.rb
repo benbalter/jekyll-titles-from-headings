@@ -20,9 +20,6 @@ module JekyllTitlesFromHeadings
     # (footnotes at the moment).
     EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
 
-    # Regex to determine if the given document is the site's homepage
-    HOMEPAGE_REGEX = %r!^/(index.html?)?$!
-
     safe true
     priority :lowest
 
@@ -40,7 +37,7 @@ module JekyllTitlesFromHeadings
     end
 
     def should_add_title?(document)
-      markdown?(document) && !title?(document) && !homepage?(document)
+      markdown?(document) && !title?(document)
     end
 
     def title?(document)
@@ -73,10 +70,6 @@ module JekyllTitlesFromHeadings
 
     def filters
       @filters ||= JekyllTitlesFromHeadings::Filters.new(site)
-    end
-
-    def homepage?(document)
-      document.url =~ HOMEPAGE_REGEX
     end
   end
 end
