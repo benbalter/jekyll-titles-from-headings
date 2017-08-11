@@ -2,7 +2,6 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:site) { fixture_site("site") }
   let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
-  let(:index) { page_by_path(site, "index.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
   let(:page_with_md_title) { page_by_path(site, "page-with-md-title.md") }
   let(:html_page) { page_by_path(site, "html-page.html") }
@@ -31,21 +30,21 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
   context "detecting titles" do
     it "knows when a page has a title" do
-      expect(subject.title?(page_with_title)).to be_truthy
+      expect(subject.title?(page_with_title)).to eql(true)
     end
 
     it "knows when a page doesn't have a title" do
-      expect(subject.title?(page)).to be_falsy
+      expect(subject.title?(page)).to eql(false)
     end
   end
 
   context "detecting markdown" do
     it "knows when a page is markdown" do
-      expect(subject.markdown?(page)).to be_truthy
+      expect(subject.markdown?(page)).to eql(true)
     end
 
     it "knows when a page isn't markdown" do
-      expect(subject.markdown?(html_page)).to be_falsy
+      expect(subject.markdown?(html_page)).to eql(false)
     end
 
     it "knows the markdown converter" do
@@ -55,27 +54,19 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
   context "detecting when to add a title" do
     it "knows not to add a title for pages with titles" do
-      expect(subject.should_add_title?(page_with_title)).to be_falsy
+      expect(subject.should_add_title?(page_with_title)).to eql(false)
     end
 
     it "knows not to add a title for HTML pages" do
-      expect(subject.should_add_title?(html_page)).to be_falsy
+      expect(subject.should_add_title?(html_page)).to eql(false)
     end
 
     it "knows not add a title to non-HTML pages without titles" do
-      expect(subject.should_add_title?(page)).to be_truthy
+      expect(subject.should_add_title?(page)).to eql(true)
     end
 
     it "knows not add a title to pages with empty titles" do
-      expect(subject.should_add_title?(page_with_empty_title)).to be_falsy
-    end
-
-    it "knows not to add a title to the homepage" do
-      expect(subject.should_add_title?(index)).to be_falsy
-    end
-
-    it "knows to add titles normally" do
-      expect(subject.should_add_title?(page)).to be_truthy
+      expect(subject.should_add_title?(page_with_empty_title)).to eql(false)
     end
   end
 
