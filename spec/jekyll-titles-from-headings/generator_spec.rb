@@ -1,5 +1,7 @@
 RSpec.describe JekyllTitlesFromHeadings::Generator do
-  let(:site) { fixture_site("site", { "strip_title" => true }) }
+  let(:site) do
+    fixture_site("site", { "titles_from_headings" => { "strip_title" => true } })
+  end
   let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
