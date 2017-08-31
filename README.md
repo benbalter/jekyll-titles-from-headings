@@ -1,4 +1,4 @@
-# Jekyll Title from Headings
+# Jekyll Titles from Headings
 
 *A Jekyll plugin to pull the page title from the first Markdown heading when none is specified.*
 
@@ -30,3 +30,27 @@ Additionally, this allows you to store the title semantically, in the document i
   gems:
     - jekyll-titles-from-headings
   ```
+
+## Configuration
+If your theme renders titles based on `page.title`, you can remove the title from the content by setting
+
+```yml
+titles_from_headings:
+  strip_title: true
+```
+
+in your site's `_config.yml` to prevent rendering the title twice.
+
+To limit this behavior to a certain layouts or paths, you can use [front matter defaults](https://jekyllrb.com/docs/configuration/#front-matter-defaults), e.g.
+
+```yml
+defaults:
+  - scope:
+      path: some-path
+      layout: some_layout
+      type: posts # pages, posts, drafts or any collection in your site.
+    values:
+      strip_title: true
+```
+
+Note that you need [`jekyll-optional-front-matter`](https://github.com/benbalter/jekyll-optional-front-matter) for this to work on pages without a front matter.

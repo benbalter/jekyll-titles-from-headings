@@ -20,6 +20,9 @@ module JekyllTitlesFromHeadings
     # (footnotes at the moment).
     EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
 
+    CONFIG_KEY = "titles_from_headings".freeze
+    STRIP_TITLE_KEY = "strip_title".freeze
+
     safe true
     priority :lowest
 
@@ -33,6 +36,7 @@ module JekyllTitlesFromHeadings
       site.pages.each do |document|
         next unless should_add_title?(document)
         document.data["title"] = title_for(document)
+        strip_title!(document) if strip_title?(document)
       end
     end
 
@@ -66,6 +70,18 @@ module JekyllTitlesFromHeadings
       STRIP_MARKUP_FILTERS.reduce(string) do |memo, method|
         filters.public_send(method, memo)
       end.gsub(EXTRA_MARKUP_REGEX, "")
+    end
+
+    def strip_title?(document)
+      if document.data.key?(STRIP_TITLE_KEY)
+        document.data[STRIP_TITLE_KEY] == true
+      else
+        site.config[CONFIG_KEY] && site.config[CONFIG_KEY][STRIP_TITLE_KEY] == true
+      end
+    end
+
+    def strip_title!(document)
+      document.content.gsub!(TITLE_REGEX, "")
     end
 
     def filters

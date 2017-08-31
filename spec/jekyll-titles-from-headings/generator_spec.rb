@@ -1,5 +1,6 @@
 RSpec.describe JekyllTitlesFromHeadings::Generator do
-  let(:site) { fixture_site("site") }
+  let(:config) { {} }
+  let(:site) { fixture_site("site", config) }
   let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
@@ -15,6 +16,12 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:page_with_setex_h2) { page_by_path(site, "page-with-setex-h2.md") }
   let(:page_with_no_empty_line_after_title) do
     page_by_path(site, "page-with-no-empty-line-after-title.md")
+  end
+  let(:page_with_strip_title_true) do
+    page_by_path(site, "page-with-strip-title-true.md")
+  end
+  let(:page_with_strip_title_false) do
+    page_by_path(site, "page-with-strip-title-false.md")
   end
 
   subject { described_class.new(site) }
@@ -112,6 +119,34 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
     end
   end
 
+  context "stripping titles" do
+    before { subject.generate(site) }
+
+    context "a site with strip title enabled globally" do
+      let(:config) { { "titles_from_headings" => { "strip_title" => true } } }
+
+      it "strips the title when enabled in the configuration" do
+        expect(page.content.strip).to eql("Blah blah blah")
+      end
+
+      it "keeps the title when disabled in the front matter" do
+        expect(page_with_strip_title_false.content.strip).to eql(
+          "# Just an H1\n\nBlah blah blah"
+        )
+      end
+    end
+
+    it "strips the title when enabled in the front matter" do
+      expect(page_with_strip_title_true.content.strip).to eql("Blah blah blah")
+    end
+
+    it "keeps the title when disabled in the front matter" do
+      expect(page_with_strip_title_false.content.strip).to eql(
+        "# Just an H1\n\nBlah blah blah"
+      )
+    end
+  end
+
   context "generating" do
     before { subject.generate(site) }
 
@@ -119,7 +154,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       expect(page.data["title"]).to eql("Just an H1")
     end
 
-    it "respect a document's auto-generated title" do
+    it "respects a document's auto-generated title" do
       expect(post.data["title"]).to eql("Test")
     end
 
