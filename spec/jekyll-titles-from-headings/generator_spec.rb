@@ -1,7 +1,6 @@
 RSpec.describe JekyllTitlesFromHeadings::Generator do
-  let(:site) do
-    fixture_site("site", { "titles_from_headings" => { "strip_title" => true } })
-  end
+  let(:config) { {} }
+  let(:site) { fixture_site("site", config) }
   let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
@@ -123,8 +122,18 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   context "stripping titles" do
     before { subject.generate(site) }
 
-    it "strips the title when enabled in the configuration" do
-      expect(page.content.strip).to eql("Blah blah blah")
+    context "a site with strip title enabled globally" do
+      let(:config) { { "titles_from_headings" => { "strip_title" => true } } }
+
+      it "strips the title when enabled in the configuration" do
+        expect(page.content.strip).to eql("Blah blah blah")
+      end
+
+      it "keeps the title when disabled in the front matter" do
+        expect(page_with_strip_title_false.content.strip).to eql(
+          "# Just an H1\n\nBlah blah blah"
+        )
+      end
     end
 
     it "strips the title when enabled in the front matter" do
