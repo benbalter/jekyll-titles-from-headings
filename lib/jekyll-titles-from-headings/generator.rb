@@ -21,6 +21,7 @@ module JekyllTitlesFromHeadings
     EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
 
     CONFIG_KEY = "titles_from_headings".freeze
+    DISABLED_KEY = "disabled".freeze
     STRIP_TITLE_KEY = "strip_title".freeze
     COLLECTIONS_KEY = "collections".freeze
 
@@ -33,6 +34,7 @@ module JekyllTitlesFromHeadings
 
     def generate(site)
       @site = site
+      return if disabled?
 
       pages = site.pages
       pages = site.pages + site.documents if collections?
@@ -77,16 +79,24 @@ module JekyllTitlesFromHeadings
       end.gsub(EXTRA_MARKUP_REGEX, "")
     end
 
+    def option(key)
+      site.config[CONFIG_KEY] && site.config[CONFIG_KEY][key]
+    end
+
+    def disabled?
+      option(DISABLED_KEY)
+    end
+
     def strip_title?(document)
       if document.data.key?(STRIP_TITLE_KEY)
-        document.data[STRIP_TITLE_KEY] == true
+        document.data[STRIP_TITLE_KEY]
       else
-        site.config[CONFIG_KEY] && site.config[CONFIG_KEY][STRIP_TITLE_KEY] == true
+        option(STRIP_TITLE_KEY)
       end
     end
 
     def collections?
-      site.config[CONFIG_KEY] && site.config[CONFIG_KEY][COLLECTIONS_KEY] == true
+      option(COLLECTIONS_KEY)
     end
 
     # Documents (posts and collection items) have their title inferred from the filename.

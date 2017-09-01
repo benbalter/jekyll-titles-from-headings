@@ -216,4 +216,22 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       end
     end
   end
+
+  context "when disabled" do
+    let(:overrides) { { "titles_from_headings" => { "disabled" => true } } }
+
+    it "sets titles for pages" do
+      subject.generate(site)
+      expect(page.data["title"]).to_not eql("Just an H1")
+    end
+  end
+
+  context "when explicitly enabled" do
+    let(:overrides) { { "titles_from_headings" => { "disabled" => false } } }
+
+    it "sets titles for pages" do
+      subject.generate(site)
+      expect(page.data["title"]).to eql("Just an H1")
+    end
+  end
 end
