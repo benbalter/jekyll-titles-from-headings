@@ -32,14 +32,19 @@ Additionally, this allows you to store the title semantically, in the document i
   ```
 
 ## Configuration
-If your theme renders titles based on `page.title`, you can remove the title from the content by setting
+
+Configuration options are optional and placed in `_config.yml` under the `titles_from_headings` key. They default to:
 
 ```yml
 titles_from_headings:
-  strip_title: true
+  strip_title: false
+  collections: false
+  disabled:    false
 ```
 
-in your site's `_config.yml` to prevent rendering the title twice.
+### Stripping titles
+
+If your theme renders titles based on `page.title`, you can remove the title from the content by setting `strip_title` to prevent rendering it twice.
 
 To limit this behavior to a certain layouts or paths, you can use [front matter defaults](https://jekyllrb.com/docs/configuration/#front-matter-defaults), e.g.
 
@@ -48,9 +53,14 @@ defaults:
   - scope:
       path: some-path
       layout: some_layout
-      type: posts # pages, posts, drafts or any collection in your site.
     values:
       strip_title: true
 ```
 
-Note that you need [`jekyll-optional-front-matter`](https://github.com/benbalter/jekyll-optional-front-matter) for this to work on pages without a front matter.
+### Processing Collections
+
+If you want to enable this plugin for collection items set `collections` to a truthy value. Since collection items (including posts) already have their title inferred from the filename, this option changes the behavior of this plugin to override the inferred title and use it as a fallback if the document doesn't start with a heading.
+
+### Disabling
+
+Even if the plugin is enabled (e.g., via the `:jekyll_plugins` group in your Gemfile) you can disable it by setting the `disabled` key to a truthy value.
