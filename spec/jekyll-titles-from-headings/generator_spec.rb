@@ -218,7 +218,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
 
   context "when disabled" do
-    let(:overrides) { { "titles_from_headings" => { "disabled" => true } } }
+    let(:config) { { "titles_from_headings" => { "disabled" => true } } }
 
     it "sets titles for pages" do
       subject.generate(site)
@@ -227,7 +227,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
 
   context "when explicitly enabled" do
-    let(:overrides) { { "titles_from_headings" => { "disabled" => false } } }
+    let(:config) { { "titles_from_headings" => { "disabled" => false } } }
 
     it "sets titles for pages" do
       subject.generate(site)
