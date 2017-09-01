@@ -119,34 +119,6 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
     end
   end
 
-  context "stripping titles" do
-    before { subject.generate(site) }
-
-    context "a site with strip title enabled globally" do
-      let(:config) { { "titles_from_headings" => { "strip_title" => true } } }
-
-      it "strips the title when enabled in the configuration" do
-        expect(page.content.strip).to eql("Blah blah blah")
-      end
-
-      it "keeps the title when disabled in the front matter" do
-        expect(page_with_strip_title_false.content.strip).to eql(
-          "# Just an H1\n\nBlah blah blah"
-        )
-      end
-    end
-
-    it "strips the title when enabled in the front matter" do
-      expect(page_with_strip_title_true.content.strip).to eql("Blah blah blah")
-    end
-
-    it "keeps the title when disabled in the front matter" do
-      expect(page_with_strip_title_false.content.strip).to eql(
-        "# Just an H1\n\nBlah blah blah"
-      )
-    end
-  end
-
   context "generating" do
     before { subject.generate(site) }
 
@@ -160,6 +132,44 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "respects a document's YAML title" do
       expect(page_with_title.data["title"]).to eql("Page with title")
+    end
+
+    it "does not strip the title when not enabled in the configuration" do
+      expect(page.content.strip).to eql("# Just an H1\n\nBlah blah blah")
+    end
+
+    context "stripping titles" do
+      context "a site with strip title enabled globally" do
+        let(:config) { { "titles_from_headings" => { "strip_title" => true } } }
+
+        it "strips the title when enabled in the configuration" do
+          expect(page.content.strip).to eql("Blah blah blah")
+        end
+
+        it "keeps the title when disabled in the front matter" do
+          expect(page_with_strip_title_false.content.strip).to eql(
+            "# Just an H1\n\nBlah blah blah"
+          )
+        end
+      end
+
+      it "strips the title when enabled in the front matter" do
+        expect(page_with_strip_title_true.content.strip).to eql("Blah blah blah")
+      end
+
+      it "keeps the title when disabled in the front matter" do
+        expect(page_with_strip_title_false.content.strip).to eql(
+          "# Just an H1\n\nBlah blah blah"
+        )
+      end
+    end
+
+
+
+
+
+    end
+
     end
   end
 end
