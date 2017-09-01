@@ -1,7 +1,6 @@
 RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:config) { {} }
   let(:site) { fixture_site("site", config) }
-  let(:post) { site.posts.first }
   let(:page) { page_by_path(site, "page.md") }
   let(:page_with_title) { page_by_path(site, "page-with-title.md") }
   let(:page_with_md_title) { page_by_path(site, "page-with-md-title.md") }
@@ -23,6 +22,11 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:page_with_strip_title_false) do
     page_by_path(site, "page-with-strip-title-false.md")
   end
+  let(:post) { doc_by_path(site, "_posts/2016-01-01-test.md") }
+  let(:post_wihtout_heading) do
+    doc_by_path(site, "_posts/2016-01-01-test-2.md")
+  end
+  let(:item) { doc_by_path(site, "_items/some-item.md") }
 
   subject { described_class.new(site) }
 
@@ -164,12 +168,52 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       end
     end
 
+    context "collections" do
+      let(:config) do
+        {
+          "titles_from_headings" => {
+            "collections" => true,
+          },
+          "collections"          => {
+            "items" => {
+              "permalink" => "/items/:name/",
+              "output"    => true,
+            },
+          },
+        }
+      end
 
+      it "no longer respects auto-generated titles when collections is true" do
+        expect(post.data["title"]).to_not eql("Test")
+      end
 
+      it "overrides a document's title with its heading" do
+        expect(post.data["title"]).to eql("Some post")
+      end
 
+      it "will fall back on the auto-generated title if it can't find a heading" do
+        expect(post_wihtout_heading.data["title"]).to eql("Test 2")
+      end
 
+      it "works with arbitrary items in collections" do
+        expect(item.data["title"]).to eql("Some item")
+      end
     end
 
+    context "collections + strip_title" do
+      let(:config) do
+        {
+          "titles_from_headings" => {
+            "strip_title" => true,
+            "collections" => true,
+          },
+        }
+      end
+
+      it "infers the title and strips it from the content" do
+        expect(post.data["title"]).to eql("Some post")
+        expect(post.content.strip).to eql("Blah blah blah")
+      end
     end
   end
 end

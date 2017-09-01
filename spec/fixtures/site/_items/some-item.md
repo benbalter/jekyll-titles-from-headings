@@ -1,6 +1,6 @@
 ---
 ---
 
-# Some post
+# Some item
 
 Blah blah blah

@@ -22,6 +22,7 @@ module JekyllTitlesFromHeadings
 
     CONFIG_KEY = "titles_from_headings".freeze
     STRIP_TITLE_KEY = "strip_title".freeze
+    COLLECTIONS_KEY = "collections".freeze
 
     safe true
     priority :lowest
@@ -33,7 +34,10 @@ module JekyllTitlesFromHeadings
     def generate(site)
       @site = site
 
-      site.pages.each do |document|
+      pages = site.pages
+      pages = site.pages + site.documents if collections?
+
+      pages.each do |document|
         next unless should_add_title?(document)
         document.data["title"] = title_for(document)
         strip_title!(document) if strip_title?(document)
@@ -45,7 +49,7 @@ module JekyllTitlesFromHeadings
     end
 
     def title?(document)
-      !document.data["title"].nil?
+      !inferred_title?(document) && !document.data["title"].nil?
     end
 
     def markdown?(document)
@@ -59,7 +63,8 @@ module JekyllTitlesFromHeadings
     def title_for(document)
       return document.data["title"] if title?(document)
       matches = document.content.match(TITLE_REGEX)
-      strip_markup(matches[1] || matches[2]) if matches
+      return strip_markup(matches[1] || matches[2]) if matches
+      document.data["title"] # If we cant match a title, we use the inferred one.
     rescue ArgumentError => e
       raise e unless e.to_s.start_with?("invalid byte sequence in UTF-8")
     end
@@ -78,6 +83,16 @@ module JekyllTitlesFromHeadings
       else
         site.config[CONFIG_KEY] && site.config[CONFIG_KEY][STRIP_TITLE_KEY] == true
       end
+    end
+
+    def collections?
+      site.config[CONFIG_KEY] && site.config[CONFIG_KEY][COLLECTIONS_KEY] == true
+    end
+
+    # Documents (posts and collection items) have their title inferred from the filename.
+    # We want to override these titles, because they were not excplicitly set.
+    def inferred_title?(document)
+      document.is_a?(Jekyll::Document)
     end
 
     def strip_title!(document)
