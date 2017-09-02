@@ -59,7 +59,9 @@ defaults:
 
 ### Processing Collections
 
-If you want to enable this plugin for collection items set `collections` to a truthy value. Since collection items (including posts) already have their title inferred from the filename, this option changes the behavior of this plugin to override the inferred title and use it as a fallback if the document doesn't start with a heading.
+If you want to enable this plugin for collection items, set the `collections` option to `true`.
+
+Since collection items (including posts) already have a title inferred from their filename, this option changes the behavior of this plugin to override the inferred title. The inferred title is only used as a fallback in case the document doesn't start with a heading.
 
 ### Disabling
 

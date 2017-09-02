@@ -89,14 +89,14 @@ module JekyllTitlesFromHeadings
 
     def strip_title?(document)
       if document.data.key?(STRIP_TITLE_KEY)
-        document.data[STRIP_TITLE_KEY]
+        document.data[STRIP_TITLE_KEY] == true
       else
-        option(STRIP_TITLE_KEY)
+        option(STRIP_TITLE_KEY) == true
       end
     end
 
     def collections?
-      option(COLLECTIONS_KEY)
+      option(COLLECTIONS_KEY) == true
     end
 
     # Documents (posts and collection items) have their title inferred from the filename.
