@@ -21,7 +21,7 @@ module JekyllTitlesFromHeadings
     EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
 
     CONFIG_KEY = "titles_from_headings".freeze
-    DISABLED_KEY = "disabled".freeze
+    ENABLED_KEY = "enabled".freeze
     STRIP_TITLE_KEY = "strip_title".freeze
     COLLECTIONS_KEY = "collections".freeze
 
@@ -84,7 +84,7 @@ module JekyllTitlesFromHeadings
     end
 
     def disabled?
-      option(DISABLED_KEY)
+      option(ENABLED_KEY) == false
     end
 
     def strip_title?(document)

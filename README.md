@@ -37,9 +37,9 @@ Configuration options are optional and placed in `_config.yml` under the `titles
 
 ```yml
 titles_from_headings:
+  enabled:     true
   strip_title: false
   collections: false
-  disabled:    false
 ```
 
 ### Stripping titles
@@ -63,4 +63,4 @@ If you want to enable this plugin for collection items set `collections` to a tr
 
 ### Disabling
 
-Even if the plugin is enabled (e.g., via the `:jekyll_plugins` group in your Gemfile) you can disable it by setting the `disabled` key to a truthy value.
+Even if the plugin is enabled (e.g., via the `:jekyll_plugins` group in your Gemfile) you can disable it by setting the `enabled` key to `false`.
