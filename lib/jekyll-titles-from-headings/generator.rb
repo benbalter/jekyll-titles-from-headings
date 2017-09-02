@@ -36,10 +36,10 @@ module JekyllTitlesFromHeadings
       @site = site
       return if disabled?
 
-      pages = site.pages
-      pages = site.pages + site.documents if collections?
+      documents = site.pages
+      documents = site.pages + site.docs_to_write if collections?
 
-      pages.each do |document|
+      documents.each do |document|
         next unless should_add_title?(document)
         document.data["title"] = title_for(document)
         strip_title!(document) if strip_title?(document)
