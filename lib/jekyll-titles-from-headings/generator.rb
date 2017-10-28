@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module JekyllTitlesFromHeadings
   class Generator < Jekyll::Generator
     attr_accessor :site
 
+    # rubocop:disable Lint/InterpolationCheck
     TITLE_REGEX =
       %r!
         \A\s*                   # Beginning and whitespace
@@ -11,6 +14,7 @@ module JekyllTitlesFromHeadings
             (.*)\r?\n[-=]+\s*   # Setex-style header
           )$                    # end of line
       !x
+    # rubocop:enable Lint/InterpolationCheck
     CONVERTER_CLASS = Jekyll::Converters::Markdown
     STRIP_MARKUP_FILTERS = %i[
       markdownify strip_html normalize_whitespace
