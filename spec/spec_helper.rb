@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "jekyll-titles-from-headings"
 
 RSpec.configure do |config|

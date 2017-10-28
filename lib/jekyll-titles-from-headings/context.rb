@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllTitlesFromHeadings
   class Context
     attr_reader :site

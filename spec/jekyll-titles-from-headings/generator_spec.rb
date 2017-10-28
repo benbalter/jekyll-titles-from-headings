@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe JekyllTitlesFromHeadings::Generator do
   let(:config) { {} }
   let(:site) { fixture_site("site", config) }
