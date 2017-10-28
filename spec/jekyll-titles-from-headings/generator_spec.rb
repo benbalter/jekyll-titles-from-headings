@@ -216,6 +216,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
         expect(post.data["title"]).to eql("Some post")
         expect(post.content.strip).to eql("Blah blah blah")
       end
+
+      it "strips the title from the excerpt of a post" do
+        expect(post.excerpt.content.strip).to eql("Blah blah blah")
+      end
     end
   end
 
