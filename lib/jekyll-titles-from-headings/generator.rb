@@ -45,6 +45,7 @@ module JekyllTitlesFromHeadings
 
       documents.each do |document|
         next unless should_add_title?(document)
+        next if document.is_a?(Jekyll::StaticFile)
         document.data["title"] = title_for(document)
         strip_title!(document) if strip_title?(document)
       end
