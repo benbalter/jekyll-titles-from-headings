@@ -149,6 +149,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       expect(page.content.strip).to eql("# Just an H1\n\nBlah blah blah")
     end
 
+    it "doesn't err on pages without content" do
+      expect(page_without_content.data["title"]).to be_nil
+    end
+
     context "stripping titles" do
       context "a site with strip title enabled globally" do
         let(:config) { { "titles_from_headings" => { "strip_title" => true } } }
