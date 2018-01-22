@@ -30,11 +30,16 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
   let(:item) { doc_by_path(site, "_items/some-item.md") }
 
+  let(:page_without_content) do
+    page_by_path(site, "page-without-content.md")
+  end
+
   subject { described_class.new(site) }
 
   before(:each) do
     site.reset
     site.read
+    page_without_content.content = nil
   end
 
   it "saves the site" do
