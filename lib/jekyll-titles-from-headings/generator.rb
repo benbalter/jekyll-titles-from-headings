@@ -69,7 +69,7 @@ module JekyllTitlesFromHeadings
 
     def title_for(document)
       return document.data["title"] if title?(document)
-      matches = document.content.match(TITLE_REGEX)
+      matches = document.content.to_s.match(TITLE_REGEX)
       return strip_markup(matches[1] || matches[2]) if matches
       document.data["title"] # If we cant match a title, we use the inferred one.
     rescue ArgumentError => e
@@ -111,7 +111,7 @@ module JekyllTitlesFromHeadings
     end
 
     def strip_title!(document)
-      document.content.gsub!(TITLE_REGEX, "")
+      document.content.gsub!(TITLE_REGEX, "") if document.content
     end
 
     def filters
