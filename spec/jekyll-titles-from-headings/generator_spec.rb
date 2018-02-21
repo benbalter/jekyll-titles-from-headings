@@ -30,11 +30,16 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
   let(:item) { doc_by_path(site, "_items/some-item.md") }
 
+  let(:page_without_content) do
+    page_by_path(site, "page-without-content.md")
+  end
+
   subject { described_class.new(site) }
 
   before(:each) do
     site.reset
     site.read
+    page_without_content.content = nil
   end
 
   it "saves the site" do
@@ -142,6 +147,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "does not strip the title when not enabled in the configuration" do
       expect(page.content.strip).to eql("# Just an H1\n\nBlah blah blah")
+    end
+
+    it "doesn't err on pages without content" do
+      expect(page_without_content.data["title"]).to be_nil
     end
 
     context "stripping titles" do
