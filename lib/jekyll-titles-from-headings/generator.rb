@@ -100,6 +100,12 @@ module JekyllTitlesFromHeadings
       end
     end
 
+    def strip_title_excerpt?(document)
+      document.is_a?(Jekyll::Document) &&
+        document.collection.label == "posts" &&
+        document.generate_excerpt?
+    end
+
     def collections?
       option(COLLECTIONS_KEY) == true
     end
@@ -111,7 +117,15 @@ module JekyllTitlesFromHeadings
     end
 
     def strip_title!(document)
-      document.content.gsub!(TITLE_REGEX, "") if document.content
+      if document.content
+        document.content.gsub!(TITLE_REGEX, "")
+        document.content.strip!
+        strip_title_excerpt!(document) if strip_title_excerpt?(document)
+      end
+    end
+
+    def strip_title_excerpt!(document)
+      document.data["excerpt"] = Jekyll::Excerpt.new(document)
     end
 
     def filters
