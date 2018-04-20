@@ -118,8 +118,7 @@ module JekyllTitlesFromHeadings
 
     def strip_title!(document)
       if document.content
-        document.content.gsub!(TITLE_REGEX, "")
-        document.content.strip!
+        document.content = document.content.gsub(TITLE_REGEX, "").strip
         strip_title_excerpt!(document) if strip_title_excerpt?(document)
       end
     end
