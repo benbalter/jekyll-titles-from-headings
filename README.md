@@ -27,9 +27,10 @@ Additionally, this allows you to store the title semantically, in the document i
 2. Add the following to your site's config file:
 
   ```yml
-  gems:
+  plugins:
     - jekyll-titles-from-headings
   ```
+  Note: If you are using a Jekyll version less than 3.5.0, use the `gems` key instead of `plugins`.
 
 ## Configuration
 
