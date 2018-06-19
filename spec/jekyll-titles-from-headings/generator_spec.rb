@@ -249,4 +249,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       expect(page.data["title"]).to eql("Just an H1")
     end
   end
+
+  it "doesn't error when stripping title from a page with frozen content" do
+    page_with_strip_title_true.content = "".freeze
+    subject.generate(site)
+    expect(page_with_strip_title_true.data["title"]).to be_nil
+  end
 end
