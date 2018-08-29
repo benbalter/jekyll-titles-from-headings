@@ -5,12 +5,12 @@ module JekyllTitlesFromHeadings
     attr_accessor :site
     TITLE_REGEX =
       %r!
-        \A\s*                   # Beginning and whitespace
-          (?:                   # either
-            \#{1,3}\s+(.*)      # atx-style header
-            |                   # or
-            (.*)\r?\n[-=]+\s*   # Setex-style header
-          )$                    # end of line
+        \A\s*                             # Beginning and whitespace
+          (?:                             # either
+            \#{1,3}\s+(.*)(?:\s+\#{1,3})? # atx-style header
+            |                             # or
+            (.*)\r?\n[-=]+\s*             # Setex-style header
+          )$                              # end of line
       !x
 
     CONVERTER_CLASS = Jekyll::Converters::Markdown
