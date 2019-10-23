@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("lib", __dir__)
 require "jekyll-titles-from-headings/version"
 
 Gem::Specification.new do |s|
@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.license       = "MIT"
 
-  s.add_runtime_dependency "jekyll", ">= 3.0", "< 5.0"
+  s.add_dependency "jekyll", ">= 3.3", "< 5.0"
   s.add_development_dependency "rspec", "~> 3.5"
-  s.add_development_dependency "rubocop", "~> 0.43", "< 0.58"
+  s.add_development_dependency "rubocop", "~> 0.71"
+  s.add_development_dependency "rubocop-jekyll", "~> 0.10"
 end

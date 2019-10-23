@@ -251,7 +251,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
   end
 
   it "doesn't error when stripping title from a page with frozen content" do
-    page_with_strip_title_true.content = "".freeze
+    page_with_strip_title_true.content = ""
     subject.generate(site)
     expect(page_with_strip_title_true.data["title"]).to be_nil
   end

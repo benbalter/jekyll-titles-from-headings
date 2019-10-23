@@ -11,21 +11,19 @@ module JekyllTitlesFromHeadings
             |                             # or
             (.*)\r?\n[-=]+\s*             # Setex-style header
           )$                              # end of line
-      !x
+      !x.freeze
 
     CONVERTER_CLASS = Jekyll::Converters::Markdown
-    STRIP_MARKUP_FILTERS = %i[
-      markdownify strip_html normalize_whitespace
-    ].freeze
+    STRIP_MARKUP_FILTERS = [:markdownify, :strip_html, :normalize_whitespace].freeze
 
     # Regex to strip extra markup still present after markdownify
     # (footnotes at the moment).
-    EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!
+    EXTRA_MARKUP_REGEX = %r!\[\^[^\]]*\]!.freeze
 
-    CONFIG_KEY = "titles_from_headings".freeze
-    ENABLED_KEY = "enabled".freeze
-    STRIP_TITLE_KEY = "strip_title".freeze
-    COLLECTIONS_KEY = "collections".freeze
+    CONFIG_KEY = "titles_from_headings"
+    ENABLED_KEY = "enabled"
+    STRIP_TITLE_KEY = "strip_title"
+    COLLECTIONS_KEY = "collections"
 
     safe true
     priority :lowest
@@ -44,6 +42,7 @@ module JekyllTitlesFromHeadings
       documents.each do |document|
         next unless should_add_title?(document)
         next if document.is_a?(Jekyll::StaticFile)
+
         document.data["title"] = title_for(document)
         strip_title!(document) if strip_title?(document)
       end
@@ -67,8 +66,10 @@ module JekyllTitlesFromHeadings
 
     def title_for(document)
       return document.data["title"] if title?(document)
+
       matches = document.content.to_s.match(TITLE_REGEX)
       return strip_markup(matches[1] || matches[2]) if matches
+
       document.data["title"] # If we cant match a title, we use the inferred one.
     rescue ArgumentError => e
       raise e unless e.to_s.start_with?("invalid byte sequence in UTF-8")
