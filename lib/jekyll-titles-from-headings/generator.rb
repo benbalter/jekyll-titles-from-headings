@@ -123,7 +123,7 @@ module JekyllTitlesFromHeadings
     end
 
     def strip_title_excerpt!(document)
-      document.data["excerpt"] = Jekyll::Excerpt.new(document)
+      document.data["excerpt"] = Jekyll::Excerpt.new(document) if document.generate_excerpt?
     end
 
     def filters
