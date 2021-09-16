@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe JekyllTitlesFromHeadings::Generator do
+  subject { described_class.new(site) }
+
   let(:config) { {} }
   let(:site) { fixture_site("site", config) }
   let(:page) { page_by_path(site, "page.md") }
@@ -34,9 +36,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
     page_by_path(site, "page-without-content.md")
   end
 
-  subject { described_class.new(site) }
-
-  before(:each) do
+  before do
     site.reset
     site.read
     page_without_content.content = nil
@@ -48,21 +48,21 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
   context "detecting titles" do
     it "knows when a page has a title" do
-      expect(subject.title?(page_with_title)).to eql(true)
+      expect(subject.title?(page_with_title)).to be(true)
     end
 
     it "knows when a page doesn't have a title" do
-      expect(subject.title?(page)).to eql(false)
+      expect(subject.title?(page)).to be(false)
     end
   end
 
   context "detecting markdown" do
     it "knows when a page is markdown" do
-      expect(subject.markdown?(page)).to eql(true)
+      expect(subject.markdown?(page)).to be(true)
     end
 
     it "knows when a page isn't markdown" do
-      expect(subject.markdown?(html_page)).to eql(false)
+      expect(subject.markdown?(html_page)).to be(false)
     end
 
     it "knows the markdown converter" do
@@ -72,19 +72,19 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
   context "detecting when to add a title" do
     it "knows not to add a title for pages with titles" do
-      expect(subject.should_add_title?(page_with_title)).to eql(false)
+      expect(subject.should_add_title?(page_with_title)).to be(false)
     end
 
     it "knows not to add a title for HTML pages" do
-      expect(subject.should_add_title?(html_page)).to eql(false)
+      expect(subject.should_add_title?(html_page)).to be(false)
     end
 
     it "knows not add a title to non-HTML pages without titles" do
-      expect(subject.should_add_title?(page)).to eql(true)
+      expect(subject.should_add_title?(page)).to be(true)
     end
 
     it "knows not add a title to pages with empty titles" do
-      expect(subject.should_add_title?(page_with_empty_title)).to eql(false)
+      expect(subject.should_add_title?(page_with_empty_title)).to be(false)
     end
   end
 
@@ -195,7 +195,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       end
 
       it "no longer respects auto-generated titles when collections is true" do
-        expect(post.data["title"]).to_not eql("Test")
+        expect(post.data["title"]).not_to eql("Test")
       end
 
       it "overrides a document's title with its heading" do
@@ -237,7 +237,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
     it "sets titles for pages" do
       subject.generate(site)
-      expect(page.data["title"]).to_not eql("Just an H1")
+      expect(page.data["title"]).not_to eql("Just an H1")
     end
   end
 

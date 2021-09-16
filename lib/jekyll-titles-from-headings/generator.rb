@@ -3,6 +3,7 @@
 module JekyllTitlesFromHeadings
   class Generator < Jekyll::Generator
     attr_accessor :site
+
     TITLE_REGEX =
       %r!
         \A\s*                             # Beginning and whitespace

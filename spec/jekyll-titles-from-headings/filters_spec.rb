@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe JekyllTitlesFromHeadings::Filters do
-  let(:site) { fixture_site("site") }
   subject { described_class.new(site) }
+
+  let(:site) { fixture_site("site") }
 
   it "markdownifies" do
     html = subject.markdownify("# test")
