@@ -1,6 +1,0 @@
----
----
-
-Something else
-
-# Title
