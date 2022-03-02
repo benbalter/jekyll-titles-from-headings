@@ -102,7 +102,6 @@ module JekyllTitlesFromHeadings
 
     def strip_title_excerpt?(document)
       document.is_a?(Jekyll::Document) &&
-        document.collection.label == "posts" &&
         document.generate_excerpt?
     end
 
