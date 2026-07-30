@@ -202,7 +202,7 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
         expect(post.data["title"]).to eql("Some post")
       end
 
-      it "will fall back on the auto-generated title if it can't find a heading" do
+      it "falls back on the auto-generated title if it can't find a heading" do
         expect(post_wihtout_heading.data["title"]).to eql("Test 2")
       end
 
