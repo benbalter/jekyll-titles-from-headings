@@ -7,7 +7,7 @@ module JekyllTitlesFromHeadings
 
     def initialize(site)
       @site    = site
-      @context = JekyllTitlesFromHeadings::Context.new(site)
+      @context = Liquid::Context.new({}, {}, :site => site)
     end
   end
 end

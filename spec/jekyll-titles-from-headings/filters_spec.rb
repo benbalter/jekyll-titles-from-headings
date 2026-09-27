@@ -5,6 +5,12 @@ RSpec.describe JekyllTitlesFromHeadings::Filters do
 
   let(:site) { fixture_site("site") }
 
+  it "exposes the site to Jekyll's filters through a Liquid context" do
+    context = subject.instance_variable_get(:@context)
+    expect(context).to be_a(Liquid::Context)
+    expect(context.registers[:site]).to eql(site)
+  end
+
   it "markdownifies" do
     html = subject.markdownify("# test")
     expect(html).to eql("<h1 id=\"test\">test</h1>\n")
