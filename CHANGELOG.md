@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.5
+
+### Bug fixes
+
+- Strip ATX closing hashes, so `# Title ##` produces the title `Title` (#97)
+
+### Internal
+
+- Use `Liquid::Context` instead of a custom context class (#97)
+
+### Dependencies
+
+- Declare `required_ruby_version >= 3.0` (#89)
+
+### Infrastructure
+
+- Bump `github/codeql-action` (#90, #94)
+
 ## 0.5.4
 
 ### Bug fixes
