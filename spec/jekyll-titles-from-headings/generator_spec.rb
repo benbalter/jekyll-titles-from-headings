@@ -123,6 +123,21 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       expect(subject.title_for(page_with_content_before_title)).to be_nil
     end
 
+    it "strips an ATX closing sequence" do
+      page.content = "# Title ##\n\nBlah blah blah"
+      expect(subject.title_for(page)).to eql("Title")
+    end
+
+    it "strips an ATX closing sequence with CRLF line endings" do
+      page.content = "# Title ##\r\n\r\nBlah blah blah"
+      expect(subject.title_for(page)).to eql("Title")
+    end
+
+    it "keeps a # that isn't part of a closing sequence" do
+      page.content = "# C# tips #hashtag\n\nBlah blah blah"
+      expect(subject.title_for(page)).to eql("C# tips #hashtag")
+    end
+
     it "does not require a blank line after the title" do
       expect(
         subject.title_for(page_with_no_empty_line_after_title)
