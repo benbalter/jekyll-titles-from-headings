@@ -233,6 +233,9 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
             "strip_title" => true,
             "collections" => true,
           },
+          "collections"          => {
+            "items" => { "output" => true },
+          },
         }
       end
 
@@ -243,6 +246,10 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
       it "strips the title from the excerpt of a post" do
         expect(post.excerpt.content.strip).to eql("Blah blah blah")
+      end
+
+      it "strips the title from the excerpt of a non-post collection document" do
+        expect(item.data["excerpt"].content.strip).to eql("Blah blah blah")
       end
     end
   end
