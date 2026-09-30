@@ -11,6 +11,14 @@ Gem::Specification.new do |s|
   s.homepage      = "https://github.com/benbalter/jekyll-titles-from-headings"
   s.summary       = "A Jekyll plugin to pull the page title from the first " \
                     "Markdown heading when none is specified."
+  s.description   = "Jekyll plugin that sets page.title from the first Markdown heading " \
+                    "when front matter has none. Supported on GitHub Pages."
+  s.metadata      = {
+    "homepage_uri"    => "https://github.com/benbalter/jekyll-titles-from-headings",
+    "source_code_uri" => "https://github.com/benbalter/jekyll-titles-from-headings",
+    "bug_tracker_uri" => "https://github.com/benbalter/jekyll-titles-from-headings/issues",
+    "changelog_uri"   => "https://github.com/benbalter/jekyll-titles-from-headings/releases",
+  }
 
   s.files         = `git ls-files lib *.md`.split("\n")
   s.platform      = Gem::Platform::RUBY
@@ -23,5 +31,14 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rubocop", "~> 1.18"
   s.add_development_dependency "rubocop-jekyll", "~> 0.10"
   s.add_development_dependency("rubocop-performance", "~> 1.5")
-  s.add_development_dependency("rubocop-rspec", "~> 2.0")
+  s.add_development_dependency("rubocop-rspec", "~> 3.0")
+  # No longer default gems as of recent Rubies; required transitively by
+  # RuboCop and Jekyll's dependencies (e.g. safe_yaml needs base64 on Ruby
+  # 3.4+, RuboCop needs benchmark/ostruct on Ruby 4.0).
+  s.add_development_dependency("base64")
+  s.add_development_dependency("benchmark")
+  s.add_development_dependency("ostruct")
+  s.add_development_dependency("tsort")
+
+  s.required_ruby_version = ">= 3.0"
 end

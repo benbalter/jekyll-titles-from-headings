@@ -8,7 +8,8 @@ module JekyllTitlesFromHeadings
       %r!
         \A\s*                             # Beginning and whitespace
           (?:                             # either
-            \#{1,3}\s+(.*)(?:\s+\#{1,3})? # atx-style header
+            \#{1,3}\s+(.*?)               # atx-style header, excluding an
+            (?:[ \t]+\#+)?[ \t]*\r?       # optional closing sequence
             |                             # or
             (.*)\r?\n[-=]+\s*             # Setex-style header
           )$                              # end of line
@@ -117,7 +118,7 @@ module JekyllTitlesFromHeadings
 
     def strip_title!(document)
       if document.content
-        document.content = document.content.gsub(TITLE_REGEX, "").strip
+        document.content = document.content.sub(TITLE_REGEX, "").strip
         strip_title_excerpt!(document) if strip_title_excerpt?(document)
       end
     end

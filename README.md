@@ -1,6 +1,6 @@
 # Jekyll Titles from Headings
 
-*A Jekyll plugin to pull the page title from the first Markdown heading when none is specified.*
+*Jekyll plugin that sets page.title from the first Markdown heading when front matter has none. Supported on GitHub Pages.*
 
 [![CI](https://github.com/benbalter/jekyll-titles-from-headings/actions/workflows/ci.yml/badge.svg)](https://github.com/benbalter/jekyll-titles-from-headings/actions/workflows/ci.yml)
 
