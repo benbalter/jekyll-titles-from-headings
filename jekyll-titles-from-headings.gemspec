@@ -11,6 +11,14 @@ Gem::Specification.new do |s|
   s.homepage      = "https://github.com/benbalter/jekyll-titles-from-headings"
   s.summary       = "A Jekyll plugin to pull the page title from the first " \
                     "Markdown heading when none is specified."
+  s.description   = "Jekyll plugin that sets page.title from the first Markdown heading " \
+                    "when front matter has none. Supported on GitHub Pages."
+  s.metadata      = {
+    "homepage_uri"    => "https://github.com/benbalter/jekyll-titles-from-headings",
+    "source_code_uri" => "https://github.com/benbalter/jekyll-titles-from-headings",
+    "bug_tracker_uri" => "https://github.com/benbalter/jekyll-titles-from-headings/issues",
+    "changelog_uri"   => "https://github.com/benbalter/jekyll-titles-from-headings/releases",
+  }
 
   s.files         = `git ls-files lib *.md`.split("\n")
   s.platform      = Gem::Platform::RUBY
