@@ -1,15 +1,22 @@
 # Changelog
 
-## Unreleased
+## 0.5.7
+
+Maintenance release: no runtime behavior changes.
+
+### Infrastructure
+
+- Releases are now published from GitHub Actions via RubyGems trusted
+  publishing when a `vX.Y.Z` tag is pushed (#103)
+- Declare explicit, least-privilege workflow permissions and remove stale
+  repository configuration (#102)
+
+## 0.5.6
 
 ### Fixed
 
 - With `strip_title: true`, the title is now also stripped from excerpts of
   documents in collections other than `_posts` (#81, #82, @staticintlucas)
-
-## 0.5.6
-
-Maintenance release: no runtime behavior changes.
 
 ### Documentation
 
