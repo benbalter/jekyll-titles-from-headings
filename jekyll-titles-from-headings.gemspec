@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
     "changelog_uri"   => "https://github.com/benbalter/jekyll-titles-from-headings/releases",
   }
 
-  s.files         = `git ls-files lib *.md`.split("\n")
+  s.files         = `git ls-files lib README.md CHANGELOG.md LICENSE.md`.split("\n")
   s.platform      = Gem::Platform::RUBY
   s.require_paths = ["lib"]
   s.license       = "MIT"
