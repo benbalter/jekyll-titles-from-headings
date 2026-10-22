@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- With `collections: true`, keep titles set explicitly in the front matter of
+  posts and collection documents instead of replacing them with the first heading (#109)
+
 ## 0.5.7
 
 Maintenance release: no runtime behavior changes.
