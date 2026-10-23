@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- With `collections: true`, keep titles set explicitly in the front matter of
+  posts and collection documents instead of replacing them with the first heading.
+  A title set through front matter `defaults` now also counts as explicit and is
+  kept (#109, #111, @anyingiit)
+
 ## 0.5.7
 
 Maintenance release: no runtime behavior changes.

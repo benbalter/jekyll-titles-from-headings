@@ -110,10 +110,27 @@ module JekyllTitlesFromHeadings
       option(COLLECTIONS_KEY) == true
     end
 
-    # Documents (posts and collection items) have their title inferred from the filename.
-    # We want to override these titles, because they were not excplicitly set.
+    # Documents (posts and collection items) have their title inferred from the filename,
+    # unless it is set explicitly in the front matter. We want to override only the inferred
+    # titles, so a document's title counts as inferred when it matches its titleized slug.
     def inferred_title?(document)
-      document.is_a?(Jekyll::Document)
+      return false unless document.is_a?(Jekyll::Document)
+
+      # Jekyll 4 strips trailing periods from the slug, Jekyll 3 doesn't
+      slug = filename_slug(document)
+      [slug, slug.sub(%r!\.*\z!, "")].any? do |candidate|
+        document.data["title"] == Jekyll::Utils.titleize_slug(candidate)
+      end
+    end
+
+    # The slug Jekyll derives from the filename when inferring the title
+    # (see Jekyll::Document#populate_title). It ignores a `slug` set in the front matter.
+    def filename_slug(document)
+      path = document.relative_path
+      matches = path.match(Jekyll::Document::DATE_FILENAME_MATCHER)
+      slug = matches[2] if matches
+      slug ||= path.match(Jekyll::Document::DATELESS_FILENAME_MATCHER)&.captures&.first
+      slug || document.basename_without_ext
     end
 
     def strip_title!(document)

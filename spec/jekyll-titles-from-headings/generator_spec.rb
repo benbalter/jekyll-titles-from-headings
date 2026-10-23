@@ -224,6 +224,16 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
       it "works with arbitrary items in collections" do
         expect(item.data["title"]).to eql("Some item")
       end
+
+      it "respects a title set explicitly in a document's front matter" do
+        post_with_title = doc_by_path(site, "_posts/2016-01-01-post-with-title.md")
+        expect(post_with_title.data["title"]).to eql("Explicit title")
+      end
+
+      it "overrides the title inferred from the filename of a document with a custom slug" do
+        post_with_slug = doc_by_path(site, "_posts/2016-01-01-post-with-slug.md")
+        expect(post_with_slug.data["title"]).to eql("Slug heading")
+      end
     end
 
     context "collections + strip_title" do
@@ -250,6 +260,12 @@ RSpec.describe JekyllTitlesFromHeadings::Generator do
 
       it "strips the title from the excerpt of a non-post collection document" do
         expect(item.data["excerpt"].content.strip).to eql("Blah blah blah")
+      end
+
+      it "doesn't strip the heading of a document with an explicit title" do
+        post_with_title = doc_by_path(site, "_posts/2016-01-01-post-with-title.md")
+        expect(post_with_title.data["title"]).to eql("Explicit title")
+        expect(post_with_title.content).to include("# Some heading")
       end
     end
   end
